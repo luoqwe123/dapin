@@ -8,7 +8,7 @@
                     <div class="air-con">
                         <span>空调</span>
                         <!-- 空调滑动开关 -->
-                        <div :class="['air-toggle-switch', { on: airIsOn }]" @click="airToggle"></div>
+                        <Button @click="airToggle" />
                     </div>
                     <!-- 风速调节 -->
                     <div class="control-group">
@@ -32,8 +32,7 @@
                     <div class="cold-warm">
                         <div class="cold-warm-con">
                             <span>冷暖：</span>
-                            <div class="cold-hot-switch" :class="{ 'cold': isCold, 'hot': !isCold }"
-                                @click="toggleSwitch"></div>
+                            <Button :class="{ 'cold': isCold, 'hot': !isCold }" @click="toggleSwitch" />
                         </div>
                         <div class="cold-warm-con">
                             当前状态：{{ isCold ? '冷' : '暖' }}
@@ -41,11 +40,11 @@
                     </div>
                     <div class="ele-heater">
                         <span>电暖气</span>
-                        <div :class="['ele-toggle-switch', { on: eleIsOn }]" @click="eleToggle"></div>
+                        <Button @click="eleToggle" />
                     </div>
                     <div class="auto-ven">
                         <span>自动通风系统</span>
-                        <div :class="['auto-toggle-switch', { on: autoIsOn }]" @click="autoToggle"></div>
+                        <Button @click="autoToggle" />
                     </div>
                 </div>
                 <div class="left-bottom">
@@ -58,8 +57,7 @@
                         <div class="carousel-table-header">
                             <div v-for="(header, index) in headers" :key="index" class="header-item">{{ header }}</div>
                         </div>
-                        <div class="carousel-table-body" 
-                            ref="scrollContainer">
+                        <div class="carousel-table-body" ref="scrollContainer">
                             <div v-for="(row, index) in displayedData" :key="index" class="row">
                                 <div v-for="(cell, cellIndex) in row" :key="cellIndex" class="cell">{{ cell }}</div>
                             </div>
@@ -70,25 +68,38 @@
                     </div>
                 </div>
                 <div class="middle-center">
-                    <Home/>
+                    <Home />
                 </div>
-                <div class="middle-bottom"></div>
+                <div class="middle-bottom">
+                    <PowerConsumptionChart />
+                </div>
             </div>
-            <div class="right"></div>
+            <div class="right">
+                <div class="right-top">
+                    <PowerDisplay />
+                </div>
+                <div class="right-center">
+                    <SolarPowerChart />
+                </div>
+                <div class="right-bottom"></div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import GaugeChart from '../GaugeChart.vue';
+import Button from "./Button.vue"
+import GaugeChart from './GaugeChart.vue'
 import Home from "./home.vue"
+import PowerConsumptionChart from "./PowerConsumptionChart.vue"
+import PowerDisplay from "./PowerDisplay.vue"
+import SolarPowerChart from "./SolarPowerChart.vue"
 import { onMounted, computed, ref, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
 
 const scrollContainer = ref<HTMLElement | null>(null)
 const scrollSpeed = 1 // Pixels per frame
 let animationFrameId: number
-let isPaused = ref(false)
 const airIsOn = ref(false); // 空调开关状态  
 const windSpeed = ref(3);
 const temperature = ref(26);
@@ -145,14 +156,13 @@ const carData = ref([
     ["5", "17℃", "50%", "on 1m/s 26℃ 热", "off", "是"],
     ["6", "17℃", "50%", "on 1m/s 26℃ 热", "off", "是"],
 ]);
-const currentIndex = ref(0); // 当前显示的行索引
 
 const displayedData = computed(() => {
-    return [...carData.value,...carData.value]
+    return [...carData.value, ...carData.value]
 });
 // 自动滚动逻辑
 const scroll = () => {
-   
+
     if (scrollContainer.value) {
         // 每次滚动增加 scrollSpeed 像素
         scrollContainer.value.scrollTop += scrollSpeed
@@ -179,6 +189,8 @@ onMounted(() => {
                 left: 'left',
                 textStyle: {
                     color: '#fff', // 文字颜色
+                    fontSize: '1.3rem', // 字体大小
+                    fontWeight: 400 // 字体粗细
                 },
                 padding: [1, 0, 0, 0], // 上、右、下、左间距
             },
@@ -223,7 +235,7 @@ onMounted(() => {
                         },
                     },
                     splitLine: {
-                        show: false // 显示Y轴的网格线
+                        show: false // 不显示分割线
                     }
                 },
                 {
@@ -273,13 +285,6 @@ onMounted(() => {
 
         myChart.setOption(option);
     }
-    // setInterval(() => {
-    //     if (currentIndex.value < carData.value.length - 4) {
-    //         currentIndex.value++;
-    //     } else {
-    //         currentIndex.value = 0; // 重置到第一行
-    //     }
-    // }, 3000); // 每3秒滚动一次
     animationFrameId = requestAnimationFrame(scroll)
 
 });
@@ -374,7 +379,6 @@ onUnmounted(() => {
                 width: 100%;
                 height: 25%;
                 padding: 5%;
-
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -387,35 +391,8 @@ onUnmounted(() => {
                         margin-right: 20px;
                     }
 
-                    .air-toggle-switch {
-                        position: relative;
-                        width: 50px;
-                        height: 30px;
-                        background-color: #ccc;
-                        border-radius: 15px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
 
-                        &.on {
-                            background-color: #089b28;
-                        }
 
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            top: 2px;
-                            left: 2px;
-                            width: 26px;
-                            height: 26px;
-                            background-color: #fff;
-                            border-radius: 50%;
-                            transition: all 0.3s;
-                        }
-
-                        &.on::after {
-                            transform: translateX(20px);
-                        }
-                    }
                 }
 
                 .control-group {
@@ -462,39 +439,7 @@ onUnmounted(() => {
                         display: flex;
                         align-items: center;
 
-                        .cold-hot-switch {
-                            position: relative;
-                            width: 50px;
-                            height: 30px;
-                            background-color: #ccc;
-                            border-radius: 15px;
-                            cursor: pointer;
-                            transition: background-color 0.3s;
 
-                            &.cold {
-                                background-color: #a0d8ef; // 冷色调
-                            }
-
-                            &.hot {
-                                background-color: #f89c07; // 暖色调
-                            }
-
-                            &::after {
-                                content: "";
-                                position: absolute;
-                                top: 2px;
-                                left: 2px;
-                                width: 26px;
-                                height: 26px;
-                                background-color: #fff;
-                                border-radius: 50%;
-                                transition: all 0.3s;
-                            }
-
-                            &.cold::after {
-                                transform: translateX(20px);
-                            }
-                        }
                     }
                 }
 
@@ -508,35 +453,8 @@ onUnmounted(() => {
                         margin-right: 20px;
                     }
 
-                    .ele-toggle-switch {
-                        position: relative;
-                        width: 50px;
-                        height: 30px;
-                        background-color: #ccc;
-                        border-radius: 15px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
 
-                        &.on {
-                            background-color: #089b28;
-                        }
 
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            top: 2px;
-                            left: 2px;
-                            width: 26px;
-                            height: 26px;
-                            background-color: #fff;
-                            border-radius: 50%;
-                            transition: all 0.3s;
-                        }
-
-                        &.on::after {
-                            transform: translateX(20px);
-                        }
-                    }
                 }
 
                 .auto-ven {
@@ -549,35 +467,8 @@ onUnmounted(() => {
                         margin-right: 20px;
                     }
 
-                    .auto-toggle-switch {
-                        position: relative;
-                        width: 50px;
-                        height: 30px;
-                        background-color: #ccc;
-                        border-radius: 15px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
 
-                        &.on {
-                            background-color: #089b28;
-                        }
 
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            top: 2px;
-                            left: 2px;
-                            width: 26px;
-                            height: 26px;
-                            background-color: #fff;
-                            border-radius: 50%;
-                            transition: all 0.3s;
-                        }
-
-                        &.on::after {
-                            transform: translateX(20px);
-                        }
-                    }
                 }
             }
 
@@ -618,7 +509,6 @@ onUnmounted(() => {
                         align-items: center;
                         justify-content: center;
                         overflow: hidden;
-                        // align-items: center;
                     }
 
                     .header-item {
@@ -628,11 +518,7 @@ onUnmounted(() => {
                     }
 
                     .carousel-table-body {
-                        // position: absolute;
-                        // top: 30px; // 与表头高度一致
-                        // left: 0;
                         width: 100%;
-                        // height: 75%;
                         display: flex;
                         flex-direction: column;
                         font-size: 0.7rem;
@@ -656,7 +542,6 @@ onUnmounted(() => {
                         display: flex;
                         background-color: #234567;
                         color: #fff;
-                        // height: 35px;
                         overflow: hidden;
                         align-items: center;
                         border-bottom: 1px solid #123456;
@@ -675,17 +560,32 @@ onUnmounted(() => {
                     height: 100%;
                     background-color: #ffffff;
                     display: flex;
-
-                    // -webkit-font-smoothing: antialiased;
-                    // -moz-osx-font-smoothing: grayscale;
-                    // text-align: center;
                 }
+            }
+
+            .middle-center {
+                width: 100%;
+                height: 35%;
+
             }
 
         }
 
         .right {
-            width: 100%;
+            .right-top {
+                width: 100%;
+                height: 25%;
+            }
+
+            .right-center {
+                width: 100%;
+                height: 40%;
+            }
+
+            .right-bottom {
+                width: 100%;
+                height: 35%;
+            }
         }
     }
 }
