@@ -74,16 +74,21 @@
                 </div>
                 <div class="middle-bottom"></div>
             </div>
-            <div class="right"></div>
+            <div class="right">
+                <Minlin/>
+                <Circle/>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import Circle from './circle.vue';
 import GaugeChart from '../GaugeChart.vue';
 import Home from "./home.vue"
 import { onMounted, computed, ref, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
+import Minlin from './minlin.vue';
 
 const scrollContainer = ref<HTMLElement | null>(null)
 const scrollSpeed = 1 // Pixels per frame
