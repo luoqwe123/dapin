@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="middle-center">
-                    <Home />
+                   
                 </div>
                 <div class="middle-bottom">
                     <PowerConsumptionChart />
@@ -90,7 +90,7 @@
 <script setup lang="ts">
 import Button from "./Button.vue"
 import GaugeChart from './GaugeChart.vue'
-import Home from "./home.vue"
+
 import PowerConsumptionChart from "./PowerConsumptionChart.vue"
 import PowerDisplay from "./PowerDisplay.vue"
 import SolarPowerChart from "./SolarPowerChart.vue"
@@ -568,6 +568,11 @@ onUnmounted(() => {
                 height: 35%;
 
             }
+
+           .middle-bottom {
+             width: 100%;
+             height: 40%;  
+           }
 
         }
 

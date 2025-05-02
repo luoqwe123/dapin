@@ -26,12 +26,12 @@ onMounted(() => {
         trigger: 'axis'
       },
       grid: {
-                containLabel: true, // 确保网格区域包含坐标轴的标签
-                left: '3%',
-                right: '4%',
-                bottom: '5%',
-                top: '22%', // 调整图表与容器顶部的距离
-            },
+        containLabel: true, // 确保网格区域包含坐标轴的标签
+        left: '3%',
+        right: '4%',
+        bottom: '5%',
+        top: '22%', // 调整图表与容器顶部的距离
+      },
       xAxis: {
         type: 'category',
         data: ['0时', '4时', '8时', '12时', '16时', '20时', '24时'],
