@@ -1,6 +1,6 @@
 <template>
     <div class="solar-container">
-        <div class="title">太阳能发电量实时</div>
+        
         <div class="info">
             <div class="item">
                 <span class="label">电量存量</span>
@@ -112,14 +112,14 @@ export default defineComponent({
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    // .title {
+    //     color: #ffffff;
+    //     font-size: 1.3rem;
+    //     font-weight: 400;
+    //     text-align: center;
 
-    .title {
-        color: #ffffff;
-        font-size: 1.3rem;
-        font-weight: 400;
-        text-align: center;
-
-    }
+    // }
 
     .info {
         display: flex;

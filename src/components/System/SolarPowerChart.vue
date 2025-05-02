@@ -15,7 +15,7 @@ onMounted(() => {
     const option = {
       title: {
         text: '太阳能发电量',
-        left: 'center',
+        left: 'left',
         textStyle: {
           color: '#fff',
           fontSize: '1.3rem',
@@ -34,6 +34,7 @@ onMounted(() => {
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: ['0时', '4时', '8时', '12时', '16时', '20时', '24时'],
         axisLine: {
           show: true,
@@ -81,7 +82,7 @@ onMounted(() => {
 .solar-power-chart {
   width: 100%;
   height: 100%;
-  padding: 0;
+  /* padding: 10px; */
   margin: 0;
 }
 </style>

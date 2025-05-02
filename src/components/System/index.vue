@@ -3,104 +3,135 @@
         <!-- 标题 -->
         <h2 class="title underline">变电站热环境数字孪系统</h2>
         <div class="main">
-            <div class="left">
-                <div class="left-top">
-                    <div class="air-con">
-                        <span>空调</span>
-                        <!-- 空调滑动开关 -->
-                        <Button @click="airToggle" />
-                    </div>
-                    <!-- 风速调节 -->
-                    <div class="control-group">
-                        <span>风速：{{ windSpeed }}m/s</span>
-                        <div class="btn-group">
-                            <button @click="decreaseWind" class="btn">-</button>
-                            <button @click="increaseWind" class="btn">+</button>
-                        </div>
-                    </div>
-                    <!-- 温度调节 -->
-                    <div class="control-group">
-                        <span>温度：{{ temperature }}℃</span>
-                        <div class="btn-group">
-                            <button @click="decreaseTemp" class="btn">-</button>
-                            <button @click="increaseTemp" class="btn">+</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="left" >
+                <div class="box-top" style="height: 70%;width: 100%;display: flex;">
+                    <div class="box-top-left" style="height: 100%;width: 30%;display: flex;flex-direction: column;justify-content: space-between;">
+                        <div class="left-top">
+                            <div class="air-con">
+                                <Word word="空调">
+                                    <div class="ari" style="display: flex;">
+                                        <span>开关：</span>
+                                        <Xdbutton @click="airToggle" name="air" />
+                                    </div>
 
-                <div class="left-center">
-                    <div class="cold-warm">
-                        <div class="cold-warm-con">
-                            <span>冷暖：</span>
-                            <Button :class="{ 'cold': isCold, 'hot': !isCold }" @click="toggleSwitch" />
-                        </div>
-                        <div class="cold-warm-con">
+                                    <!-- 风速调节 -->
+                                    <div class="control-group">
+                                        <span>风速：{{ windSpeed }}m/s</span>
+                                        <div class="btn-group">
+                                            <button @click="decreaseWind" class="btn">-</button>
+                                            <button @click="increaseWind" class="btn">+</button>
+                                        </div>
+                                    </div>
+                                    <!-- 温度调节 -->
+                                    <div class="control-group">
+                                        <span>温度：{{ temperature }}℃</span>
+                                        <div class="btn-group">
+                                            <button @click="decreaseTemp" class="btn">-</button>
+                                            <button @click="increaseTemp" class="btn">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="cold-warm">
+                                        <div class="cold-warm-con">
+                                            <span>冷暖：</span>
+                                            <Xdbutton1 :class="{ 'cold': isCold, 'hot': !isCold }" @click="toggleSwitch"
+                                                name="cold-warm" />
+                                        </div>
+                                        <!-- <div class="cold-warm-con">
                             当前状态：{{ isCold ? '冷' : '暖' }}
-                        </div>
-                    </div>
-                    <div class="ele-heater">
-                        <span>电暖气</span>
-                        <Button @click="eleToggle" />
-                    </div>
-                    <div class="auto-ven">
-                        <span>自动通风系统</span>
-                        <Button @click="autoToggle" />
-                    </div>
-                </div>
-                <div class="left-bottom">
-                    <div ref="brokenChart" class="broken-chart"></div>
-                </div>
-            </div>
-            <div class="middle">
-                <div class="middle-top">
-                    <div class="carousel-table">
-                        <div class="carousel-table-header">
-                            <div v-for="(header, index) in headers" :key="index" class="header-item">{{ header }}</div>
-                        </div>
-                        <div class="carousel-table-body" ref="scrollContainer">
-                            <div v-for="(row, index) in displayedData" :key="index" class="row">
-                                <div v-for="(cell, cellIndex) in row" :key="cellIndex" class="cell">{{ cell }}</div>
+                        </div> -->
+                                    </div>
+                                </Word>
+                            </div>
+
+                            <div class="ele-heater">
+                                <Word word="电暖器">
+                                    <div class="ele" style="display: flex;">
+                                        <span>开关：</span>
+                                        <Xdbutton @click="eleToggle" name="ele" />
+                                    </div>
+                                </Word>
+
+                            </div>
+
+                            <div class="auto-ven">
+                                <Word word="自动通风系统">
+                                    <div class="auto" style="display: flex;">
+                                        <span>开关：</span>
+                                        <Xdbutton @click="autoToggle" name="auto" />
+                                    </div>
+                                </Word>
+
                             </div>
                         </div>
                     </div>
-                    <div class="indoor-outdoor">
-                        <GaugeChart />
+                    <div class="box-top-rigth" style="height: 100%;width: 70%;display: flex;flex-direction: column;justify-content: space-around;">
+                        <div class="middle-top">
+                            <div class="carousel-table">
+                                <div class="carousel-table-header">
+                                    <div v-for="(header, index) in headers" :key="index" class="header-item">{{ header
+                                        }}</div>
+                                </div>
+                                <div class="carousel-table-body" ref="scrollContainer">
+                                    <div v-for="(row, index) in displayedData" :key="index" class="row">
+                                        <div v-for="(cell, cellIndex) in row" :key="cellIndex" class="cell">{{ cell }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="indoor-outdoor">
+                                <GaugeChart />
+                            </div>
+                        </div>
+                        <div class="middle-center">
+                            <Home style="padding: 3%;"/>
+                        </div>
                     </div>
                 </div>
-                <div class="middle-center">
-                   
-                </div>
-                <div class="middle-bottom">
-                    <PowerConsumptionChart />
+                <div class="box-floor" style="height: 30%;width: 100%;display: flex;justify-content: center;gap: 10%;">
+                    <div class="left-bottom" style="height: 100%;width: 40%;">
+                        <div ref="brokenChart" class="broken-chart"></div>
+                    </div>
+                    <div class="middle-bottom" style="height: 100%;width: 40%;">
+                        <PowerConsumptionChart />
+                    </div>
                 </div>
             </div>
+
             <div class="right">
                 <div class="right-top">
-                    <PowerDisplay />
+                    <Word word="太阳能发电量实时">
+                        <PowerDisplay style="height: 25%;width: 100%;" />
+                        <SolarPowerChart style="height: 75%;width: 100%;" />
+
+                    </Word>
+
                 </div>
-                <div class="right-center">
-                    <SolarPowerChart />
+                <div class="right-bottom">
+                    <!-- <Circle/> -->
+                    <Minlin />
+
                 </div>
-                <div class="right-bottom"></div>
             </div>
-            <div class="right">
+            <!-- <div class="right">
                 <Minlin/>
                 <Circle/>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import Button from "./Button.vue"
+import Xdbutton from "./Button.vue"
 import GaugeChart from './GaugeChart.vue'
-
+import Word from "./Word.vue"
 import PowerConsumptionChart from "./PowerConsumptionChart.vue"
 import PowerDisplay from "./PowerDisplay.vue"
 import SolarPowerChart from "./SolarPowerChart.vue"
 import { onMounted, computed, ref, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
 import Minlin from './minlin.vue';
+import Home from "./home.vue"
+import Xdbutton1 from "./Button1.vue"
 
 const scrollContainer = ref<HTMLElement | null>(null)
 const scrollSpeed = 1 // Pixels per frame
@@ -133,10 +164,13 @@ const isCold = ref(true); // 默认为冷状态
 
 const toggleSwitch = () => {
     isCold.value = !isCold.value; // 切换冷暖状态
-};
 
+};
+let a = 1
 const eleToggle = () => {
+    a++
     eleIsOn.value = !eleIsOn.value;
+    console.log(a)
 };
 
 const autoToggle = () => {
@@ -301,9 +335,10 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .dashboard-container {
+    overflow-y: hidden;
     width: 100%;
     height: 100vh;
-    padding: 20px 20px 0 20px;
+    padding: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #090f27;
 
@@ -358,46 +393,48 @@ onUnmounted(() => {
         align-items: center;
         width: 100%;
         height: 92%;
-        padding: 20px 20px 0 20px;
+        padding: 10px;
 
-        .left,
+        .left {
+            width: 80%;
+            height: 100%;
+            text-align: center;
+        }
+
         .right {
-            flex: 1;
-            width: 100%;
+
+            width: 20%;
             height: 100%;
             text-align: center;
         }
 
-        .middle {
-            flex: 2.5;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-        }
+
 
         .left {
             color: #ffffff;
             font-size: 1.3rem;
             font-weight: 400;
-
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             .left-top {
                 width: 100%;
-                height: 25%;
-                padding: 5%;
+                height: 100%;
+                padding-right: 20px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
+                gap: 20px;
 
                 .air-con {
                     display: flex;
                     align-items: center;
+                    height: 50%;
+                    width: 100%;
 
                     span {
                         margin-right: 20px;
                     }
-
-
-
                 }
 
                 .control-group {
@@ -425,55 +462,31 @@ onUnmounted(() => {
                         }
                     }
                 }
-            }
 
-            .left-center {
-                width: 100%;
-                height: 35%;
-                padding: 5%;
-
-
-                .cold-warm {
+                .cold-warm-con {
                     display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
-                    width: 100%;
-                    height: 50%;
-
-                    .cold-warm-con {
-                        display: flex;
-                        align-items: center;
-
-
-                    }
                 }
 
                 .ele-heater {
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    height: 25%;
+                    height: 20%;
 
                     span {
                         margin-right: 20px;
                     }
-
-
-
                 }
 
                 .auto-ven {
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    height: 25%;
+                    height: 20%;
 
                     span {
                         margin-right: 20px;
                     }
-
-
-
                 }
             }
 
@@ -489,112 +502,112 @@ onUnmounted(() => {
             }
         }
 
-        .middle {
-            .middle-top {
-                width: 100%;
-                height: 25%;
-                display: flex;
 
-                .carousel-table {
-                    width: 60%;
-                    height: 100%;
-                    margin: 0 auto;
-                    background-color: #0e1a2b;
-                    overflow: hidden;
-                    position: relative;
+        .middle-top {
+            width: 100%;
+            height: 29%;
+            display: flex;
 
-                    .carousel-table-header {
-                        display: flex;
-                        background-color: #123456;
-                        color: #fff;
-                        font-size: 0.7rem;
-                        width: 100%;
-                        height: 25%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        overflow: hidden;
-                    }
+            .carousel-table {
+                width: 60%;
+                height: 100%;
+                margin: 0 auto;
+                background-color: #0e1a2b;
+                overflow: hidden;
+                position: relative;
 
-                    .header-item {
-                        flex: 1;
-                        padding: 5px;
-                        margin: 0;
-                    }
-
-                    .carousel-table-body {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        font-size: 0.7rem;
-                        overflow-y: auto;
-                        max-height: 170px;
-                        scroll-behavior: smooth;
-                    }
-
-                    /* 隐藏滚动条以获得更干净的外观 */
-                    .carousel-table-body::-webkit-scrollbar {
-                        display: none;
-                    }
-
-                    .carousel-table-body {
-                        -ms-overflow-style: none;
-                        scrollbar-width: none;
-                    }
-
-                    .row {
-                        min-height: 50px;
-                        display: flex;
-                        background-color: #234567;
-                        color: #fff;
-                        overflow: hidden;
-                        align-items: center;
-                        border-bottom: 1px solid #123456;
-
-                        .cell {
-                            flex: 1;
-                            text-align: center;
-                            overflow: hidden;
-                        }
-                    }
-
-                }
-
-                .indoor-outdoor {
-                    width: 40%;
-                    height: 100%;
-                    background-color: #ffffff;
+                .carousel-table-header {
                     display: flex;
+                    background-color: #123456;
+                    color: #fff;
+                    font-size: 0.7rem;
+                    width: 100%;
+                    height: 25%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
                 }
+
+                .header-item {
+                    flex: 1;
+                    padding: 5px;
+                    margin: 0;
+                }
+
+                .carousel-table-body {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 0.7rem;
+                    overflow-y: auto;
+                    max-height: 170px;
+                    scroll-behavior: smooth;
+                }
+
+                /* 隐藏滚动条以获得更干净的外观 */
+                .carousel-table-body::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .carousel-table-body {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+
+                .row {
+                    min-height: 50px;
+                    display: flex;
+                    background-color: #234567;
+                    color: #fff;
+                    overflow: hidden;
+                    align-items: center;
+                    border-bottom: 1px solid #123456;
+
+                    .cell {
+                        flex: 1;
+                        text-align: center;
+                        overflow: hidden;
+                    }
+                }
+
             }
 
-            .middle-center {
-                width: 100%;
-                height: 35%;
-
+            .indoor-outdoor {
+                width: 40%;
+                height: 100%;
+                background-color: #ffffff;
+                display: flex;
             }
+        }
 
-           .middle-bottom {
-             width: 100%;
-             height: 40%;  
-           }
+        .middle-center {
+            width: 100%;
+            height: 68%;
 
         }
 
+
+
+
         .right {
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
             .right-top {
                 width: 100%;
-                height: 25%;
+                height: 50%;
+                display: flex;
+                flex-direction: column;
             }
 
-            .right-center {
-                width: 100%;
-                height: 40%;
-            }
+
 
             .right-bottom {
                 width: 100%;
-                height: 35%;
+                height: 50%;
             }
         }
     }

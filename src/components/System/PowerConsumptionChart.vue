@@ -15,7 +15,7 @@ onMounted(() => {
     const option = {
       title: {
         text: '整体耗电量曲线',
-        left: 'center',
+        left: 'left',
         textStyle: {
           color: '#fff',
           fontSize: '1.3rem',
@@ -34,6 +34,7 @@ onMounted(() => {
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: ['0时', '4时', '8时', '12时', '16时', '20时', '24时'],
         axisLine: {
           show: true,
@@ -61,7 +62,7 @@ onMounted(() => {
       },
       series: [
         {
-          data: [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+          data: [40, 45, 50, 55, 60, 65, 70], // 调整为7个数据点，与xAxis.data匹配
           type: 'line',
           lineStyle: {
             color: '#00bfff'
@@ -73,6 +74,11 @@ onMounted(() => {
     };
 
     myChart.setOption(option);
+
+    // 监听窗口大小变化，适配图表
+    window.addEventListener('resize', () => {
+      myChart.resize();
+    });
   }
 });
 </script>

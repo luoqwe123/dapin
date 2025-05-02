@@ -2,147 +2,43 @@
   <div class="gauge-chart-container">
     <div class="gauge-chart" v-for="(item, index) in gaugeData" :key="index">
       <div class="gauge-title">{{ item.title }}</div>
-      <v-chart :options="item.option" autoresize />
+      <div class="main-box">
+        <div class="data" v-if="item.title === '室内'">
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+        </div>
+        <div class="data" v-else>
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import VChart from 'vue-echarts';
-import * as echarts from 'echarts';
+<script setup lang="ts">
+import { ref } from 'vue';
+import Circle from './circle.vue';
 
-export default defineComponent({
-  components: {
-    VChart
+
+const gaugeData = ref([
+  {
+    title: '室内',
+
   },
-  setup() {
-    const gaugeData = ref([
-      {
-        title: '室内',
-        option: {
-          title: {
-            text: '25°C',
-            subtext: '温度',
-            left: 'center',
-            top: '30%',
-            textStyle: {
-              color: '#fff',
-              fontSize: 20
-            },
-            subtextStyle: {
-              color: '#fff',
-              fontSize: 12
-            }
-          },
-          series: [
-            {
-              type: 'gauge',
-              startAngle: 90,
-              endAngle: -270,
-              progress: {
-                show: true,
-                overlap: false,
-                roundCap: true,
-                clip: false,
-                shape: 'arc',
-                width: 10
-              },
-              axisLine: {
-                lineStyle: {
-                  width: 10
-                }
-              },
-              pointer: {
-                show: false
-              },
-              axisTick: {
-                show: false
-              },
-              splitLine: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              detail: {
-                valueAnimation: true,
-                formatter: '{value}°C',
-                color: '#fff',
-                fontSize: 20,
-                offsetCenter: [0, '70%']
-              },
-              data: [{ value: 25 }]
-            }
-          ]
-        }
-      },
-      {
-        title: '室外',
-        option: {
-          title: {
-            text: '30°C',
-            subtext: '温度',
-            left: 'center',
-            top: '30%',
-            textStyle: {
-              color: '#fff',
-              fontSize: 20
-            },
-            subtextStyle: {
-              color: '#fff',
-              fontSize: 12
-            }
-          },
-          series: [
-            {
-              type: 'gauge',
-              startAngle: 90,
-              endAngle: -270,
-              progress: {
-                show: true,
-                overlap: false,
-                roundCap: true,
-                clip: false,
-                shape: 'arc',
-                width: 10
-              },
-              axisLine: {
-                lineStyle: {
-                  width: 10
-                }
-              },
-              pointer: {
-                show: false
-              },
-              axisTick: {
-                show: false
-              },
-              splitLine: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              detail: {
-                valueAnimation: true,
-                formatter: '{value}°C',
-                color: '#fff',
-                fontSize: 20,
-                offsetCenter: [0, '70%']
-              },
-              data: [{ value: 30 }]
-            }
-          ]
-        }
-      }
-    ]);
+  {
+    title: '室外',
 
-    return {
-      gaugeData
-    };
   }
-});
+]);
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -161,13 +57,36 @@ export default defineComponent({
   height: 100%;
   background-color: #0e1a2b;
   border-radius: 10px;
-  padding: 10px;
+ 
 }
 
 .gauge-title {
   color: #fff;
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 10px;
+  font-size: 1.3rem;
+  // text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+
+}
+
+.main-box {
+  height: 75%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 16px;
+  .data {
+    
+    display: inline-flex;
+    flex-direction: row; // 保持行布局
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap; // 启用换行
+    gap: 10px;
+    // box-sizing: border-box; // 包含 padding 在高度计算中
+  }
 }
 </style>

@@ -1,54 +1,123 @@
 <template>
-    <div ref="chartRef" style="width: 100%; height: 400px;"></div>
-  </template>
-  
-  <script lang="ts" setup>
-  import { ref, onMounted, } from 'vue';
-  import * as echarts from 'echarts';
-  const props = withDefaults(defineProps<{
-    value:number
-  }>(),{
-    value:20
-  })
-  const chartRef = ref<HTMLDivElement | null>(null);
-  const value = ref(props.value); // 示例值，可根据实际情况修改
-  const title = ref('仪表'); // 示例标题，可根据实际情况修改
-  const min = ref(0); // 最小值
-  const max = ref(100); // 最大值
-  
-  const initChart = () => {
-    if (chartRef.value) {
-      const myChart = echarts.init(chartRef.value);
-      const option = {
-        tooltip: {
-          formatter: '{a} <br/>{b} : {c}%'
+  <div ref="chartRef" class="gauge-chartel"></div>
+</template>
+
+<script setup lang="ts">
+import {  onMounted, ref, watch} from "vue";
+import * as echarts from "echarts";
+const props = withDefaults(defineProps<{
+  value: number
+  name: string
+  min: number
+  max: number
+  unit: string
+}>(), {
+  value: 10,
+  name: '温度',
+  min: -20,
+  max: 40,
+  unit: '°C'
+})
+
+
+const chartRef = ref<HTMLDivElement | null>(null);
+let chartInstance: echarts.ECharts | null = null;
+
+// 初始化 ECharts
+const initChart = () => {
+  if (!chartRef.value) return;
+
+  chartInstance = echarts.init(chartRef.value);
+
+  const options = getChartOptions(props);
+  chartInstance.setOption(options);
+};
+
+// 动态更新图表
+const updateChart = () => {
+  if (chartInstance) {
+    const options = getChartOptions(props);
+    chartInstance.setOption(options);
+  }
+};
+
+// 监听数据变化
+watch(
+  () => props,
+  () => {
+    updateChart();
+  },
+  { deep: true }
+);
+
+// 组件挂载后初始化图表
+onMounted(() => {
+  initChart();
+});
+
+// 图表配置函数
+const getChartOptions = (data: {
+  value: number;
+  name: string;
+  min: number;
+  max: number;
+  unit: string;
+}) => {
+  return {
+    series: [
+      {
+        type: "gauge",
+        radius: "100%", // 图表尺寸
+        startAngle: 90,
+        endAngle: -270,
+        splitNumber: 0, // 无刻度
+        axisLine: {
+          lineStyle: {
+            width: 8, // 环形宽度
+            color: [
+              [data.value / data.max, "#3FA7DC"], // 当前值的颜色
+              [1, "#E5E5E5"], // 剩余部分
+            ],
+          },
         },
-       
-        series: [
+        pointer: {
+          show: false, // 不显示指针
+        },
+        axisTick: {
+          show: false, // 不显示刻度
+        },
+        splitLine: {
+          show: false, // 不显示分割线
+        },
+        axisLabel: {
+          show: false, // 不显示轴标签
+        },
+        detail: {
+          valueAnimation: true,
+          formatter: `{value}${data.unit}`,
+          color: "#333",
+          fontSize: 14, // 中心文字大小
+          offsetCenter: [0, "0%"], // 中心位置
+        },
+        data: [
           {
-            name: title.value,
-            type: 'gauge',
-            min: min.value,
-            max: max.value,
-            detail: {
-              formatter: '{value}'
-            },
-            data: [
-              {
-                value: value.value,
-                
-              }
-            ]
-          }
-        ]
-      };
-      myChart.setOption(option);
-    }
+            value: data.value,
+            // name: data.name,
+          },
+        ],
+      },
+    ],
   };
-  
-  onMounted(() => {
-    initChart();
-  });
-  </script>
-  
-  <style scoped></style>    
+};
+
+
+
+
+</script>
+
+<style lang="scss" scoped>
+.gauge-chartel {
+  width: 50px;
+  height: 50px;
+}
+</style>
