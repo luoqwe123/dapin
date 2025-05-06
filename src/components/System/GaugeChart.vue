@@ -5,14 +5,14 @@
       <div class="main-box">
         <div class="data" v-if="item.title === '室内'">
           <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="50" name="湿度" :min="0" :max="100" unit="%" />
+          <Circle :value="1" name="速度" :min="0" :max="10" unit="m/s" />
         </div>
         <div class="data" v-else>
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
-          <Circle :value="10" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="30" name="温度" :min="-20" :max="40" unit="°C" />
+          <Circle :value="50" name="湿度" :min="0" :max="100" unit="%" />
+          <Circle :value="4" name="风速" :min="0" :max="10" unit="m/s" />
+          <Circle :value="60" name="光照强度" :min="0" :max="100" unit="lx" />
 
         </div>
       </div>
@@ -50,33 +50,38 @@ const gaugeData = ref([
   width: 100%;
   background-color: #0e1a2b;
   // padding: 20px;
+  flex-direction: column;
+  border-radius: inherit;
+  // border: 1px solid #0e1a2b;
 }
 
 .gauge-chart {
   width: 100%;
-  height: 100%;
+  height: 50%;
   background-color: #0e1a2b;
-  border-radius: 10px;
- 
+  border-radius: inherit;
+  display: flex;
+  
 }
 
 .gauge-title {
   color: #fff;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   // text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25%;
+  height: 100%;
 
 }
 
 .main-box {
-  height: 75%;
+  height: 100%;
   width: 100%;
   display: flex;
+  
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   padding: 0px 16px;
   .data {
     

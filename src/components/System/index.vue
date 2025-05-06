@@ -3,51 +3,66 @@
         <!-- 标题 -->
         <h2 class="title underline">变电站热环境数字孪系统</h2>
         <div class="main">
-            <div class="left" >
+            <div class="left">
                 <div class="box-top" style="height: 70%;width: 100%;display: flex;">
-                    <div class="box-top-left" style="height: 100%;width: 30%;display: flex;flex-direction: column;justify-content: space-between;">
+                    <div class="box-top-left"
+                        style="height: 100%;width: 30%;display: flex;flex-direction: column;justify-content: space-between;">
                         <div class="left-top">
                             <div class="air-con">
                                 <Word word="空调">
-                                    <div class="ari" style="display: flex;">
-                                        <span>开关：</span>
-                                        <Xdbutton @click="airToggle" name="air" />
-                                    </div>
+                                    <div class="ari-content" style="display: inline-flex;flex-direction: column;justify-content: space-around;align-items:left;
+                                        height: 100%;">
+                                        <div class="ari" style="display: flex;">
+                                            <span class="spanTitle">开关：</span>
+                                            <Xdbutton @click="airToggle" name="air" style="margin: 0px auto;" />
+                                        </div>
 
-                                    <!-- 风速调节 -->
-                                    <div class="control-group">
-                                        <span>风速：{{ windSpeed }}m/s</span>
-                                        <div class="btn-group">
-                                            <button @click="decreaseWind" class="btn">-</button>
-                                            <button @click="increaseWind" class="btn">+</button>
+                                        <!-- 风速调节 -->
+                                        <div class="control-group">
+                                            <span class="spanTitle">风速：</span>
+                                            <div class="btn-group">
+                                                <button @click="decreaseWind" class="btn">-</button>
+                                                <span style="margin: 3% 10px;">
+                                                    <span style="font-family: 'MyCustomFont', sans-serif;">{{ windSpeed
+                                                    }}</span>m/s
+                                                </span>
+                                                <button @click="increaseWind" class="btn">+</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- 温度调节 -->
-                                    <div class="control-group">
-                                        <span>温度：{{ temperature }}℃</span>
-                                        <div class="btn-group">
-                                            <button @click="decreaseTemp" class="btn">-</button>
-                                            <button @click="increaseTemp" class="btn">+</button>
+                                        <!-- 温度调节 -->
+                                        <div class="control-group">
+                                            <span class="spanTitle">温度：</span>
+                                            <div class="btn-group">
+                                                <button @click="decreaseTemp" class="btn">-</button>
+                                                <span style="margin: 3% 10px;">
+                                                    <span style="font-family: 'MyCustomFont', sans-serif;">{{
+                                                        temperature }}</span>℃
+                                                </span>
+
+                                                <button @click="increaseTemp" class="btn">+</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="cold-warm">
-                                        <div class="cold-warm-con">
-                                            <span>冷暖：</span>
-                                            <Xdbutton1 :class="{ 'cold': isCold, 'hot': !isCold }" @click="toggleSwitch"
-                                                name="cold-warm" />
-                                        </div>
-                                        <!-- <div class="cold-warm-con">
+                                        <div class="cold-warm">
+                                            <div class="cold-warm-con">
+                                                <span class="spanTitle">冷暖：</span>
+                                                <Xdbutton1 :class="{ 'cold': isCold, 'hot': !isCold }"
+                                                    @click="toggleSwitch" name="cold-warm" style="margin: 0px auto;" />
+                                            </div>
+                                            <!-- <div class="cold-warm-con">
                             当前状态：{{ isCold ? '冷' : '暖' }}
                         </div> -->
+                                        </div>
                                     </div>
+
                                 </Word>
                             </div>
 
                             <div class="ele-heater">
                                 <Word word="电暖器">
-                                    <div class="ele" style="display: flex;">
-                                        <span>开关：</span>
-                                        <Xdbutton @click="eleToggle" name="ele" />
+                                    <div class="ele" style="display: inline-flex;align-items:center;justify-content: center;
+                                        height: 100%;width: 100%;">
+                                        <span class="spanTitle">开关：</span>
+                                        <Xdbutton @click="eleToggle" name="ele" style="height: 34%;width: 28%;" />
                                     </div>
                                 </Word>
 
@@ -55,18 +70,22 @@
 
                             <div class="auto-ven">
                                 <Word word="自动通风系统">
-                                    <div class="auto" style="display: flex;">
-                                        <span>开关：</span>
-                                        <Xdbutton @click="autoToggle" name="auto" />
+                                    <div class="auto" style="display: inline-flex;align-items:center;justify-content: center;
+                                        height: 100%;width: 100%;">
+                                        <span class="spanTitle">开关：</span>
+                                        <Xdbutton @click="autoToggle" name="auto" style="height: 34%;width: 28%;" />
                                     </div>
                                 </Word>
 
                             </div>
                         </div>
                     </div>
-                    <div class="box-top-rigth" style="height: 100%;width: 70%;display: flex;flex-direction: column;justify-content: space-around;">
+                    <div class="box-top-rigth"
+                        style="height: 100%;width: 70%;display: flex;flex-direction: column;justify-content: space-around;">
                         <div class="middle-top">
-                            <div class="carousel-table">
+                            <ScrollList :headers="headers" :data="carData" style=" width: 60%;height: 100%;
+                            margin: 0 auto;background-color: #0e1a2b;overflow: hidden;border-radius: 1vw 0 0 1vw;" />
+                            <!-- <div class="carousel-table">
                                 <div class="carousel-table-header">
                                     <div v-for="(header, index) in headers" :key="index" class="header-item">{{ header
                                         }}</div>
@@ -77,13 +96,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="indoor-outdoor">
                                 <GaugeChart />
                             </div>
                         </div>
                         <div class="middle-center">
-                            <Home style="padding: 3%;"/>
+                            <Home style="padding: 5% 3%;" />
                         </div>
                     </div>
                 </div>
@@ -99,7 +118,7 @@
 
             <div class="right">
                 <div class="right-top">
-                    <Word word="太阳能发电量实时">
+                    <Word word="太阳能发电量实时" style="gap: 1vh;">
                         <PowerDisplay style="height: 25%;width: 100%;" />
                         <SolarPowerChart style="height: 75%;width: 100%;" />
 
@@ -108,7 +127,7 @@
                 </div>
                 <div class="right-bottom">
                     <!-- <Circle/> -->
-                    <Minlin />
+                    <Minlin style="border-radius: 0.6rem;overflow: hidden;" />
 
                 </div>
             </div>
@@ -130,12 +149,13 @@ import SolarPowerChart from "./SolarPowerChart.vue"
 import { onMounted, computed, ref, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
 import Minlin from './minlin.vue';
-import Home from "./home.vue"
+import Home from "./Home2.vue"
 import Xdbutton1 from "./Button1.vue"
+import ScrollList from "./ScrollList.vue"
 
 const scrollContainer = ref<HTMLElement | null>(null)
-const scrollSpeed = 1 // Pixels per frame
-let animationFrameId: number
+// const scrollSpeed = 1 // Pixels per frame
+// let animationFrameId: number
 const airIsOn = ref(false); // 空调开关状态  
 const windSpeed = ref(3);
 const temperature = ref(26);
@@ -183,7 +203,7 @@ const headers = ref([
     "房间号",
     "温度",
     "湿度",
-    "空调：开关，风速，温度，冷热",
+    "空调",
     "电暖气开关",
     "传感器是否正常工作"
 ]);
@@ -200,21 +220,21 @@ const displayedData = computed(() => {
     return [...carData.value, ...carData.value]
 });
 // 自动滚动逻辑
-const scroll = () => {
+// const scroll = () => {
 
-    if (scrollContainer.value) {
-        // 每次滚动增加 scrollSpeed 像素
-        scrollContainer.value.scrollTop += scrollSpeed
-        // console.log(scrollContainer.value.scrollTop)
-        // 当滚动到复制的数据部分（即原始数据的长度）时，重置到顶部
-        // scrollHeight / 2 表示原始数据的总高度
-        if (scrollContainer.value.scrollTop >= scrollContainer.value.scrollHeight / 2) {
-            scrollContainer.value.scrollTop = 0
-        }
-    }
-    // 持续请求动画帧，实现平滑滚动
-    animationFrameId = requestAnimationFrame(scroll)
-}
+//     if (scrollContainer.value) {
+//         // 每次滚动增加 scrollSpeed 像素
+//         scrollContainer.value.scrollTop += scrollSpeed
+//         // console.log(scrollContainer.value.scrollTop)
+//         // 当滚动到复制的数据部分（即原始数据的长度）时，重置到顶部
+//         // scrollHeight / 2 表示原始数据的总高度
+//         if (scrollContainer.value.scrollTop >= scrollContainer.value.scrollHeight / 2) {
+//             scrollContainer.value.scrollTop = 0
+//         }
+//     }
+//     // 持续请求动画帧，实现平滑滚动
+//     animationFrameId = requestAnimationFrame(scroll)
+// }
 
 
 
@@ -228,7 +248,7 @@ onMounted(() => {
                 left: 'left',
                 textStyle: {
                     color: '#fff', // 文字颜色
-                    fontSize: '1.3rem', // 字体大小
+                    fontSize: '1.2rem', // 字体大小
                     fontWeight: 400 // 字体粗细
                 },
                 padding: [1, 0, 0, 0], // 上、右、下、左间距
@@ -300,7 +320,7 @@ onMounted(() => {
                 {
                     name: '温度',
                     type: 'line',
-                    data: [40, 45, 50, 55, 60, 65, 70],
+                    data: [28, 30, 29, 32, 35, 27, 25],
                     lineStyle: {
                         color: '#ff0', // 线条颜色
                     },
@@ -311,7 +331,7 @@ onMounted(() => {
                 {
                     name: '湿度',
                     type: 'line',
-                    data: [20, 22, 24, 26, 28, 30, 32],
+                    data: [50, 44, 36, 40, 48, 52, 46],
                     lineStyle: {
                         color: '#00f', // 线条颜色
                     },
@@ -324,13 +344,13 @@ onMounted(() => {
 
         myChart.setOption(option);
     }
-    animationFrameId = requestAnimationFrame(scroll)
+    // animationFrameId = requestAnimationFrame(scroll)
 
 });
 // 组件卸载时取消动画
-onUnmounted(() => {
-    cancelAnimationFrame(animationFrameId)
-})
+// onUnmounted(() => {
+//     cancelAnimationFrame(animationFrameId)
+// })
 </script>
 
 <style scoped lang="scss">
@@ -412,11 +432,12 @@ onUnmounted(() => {
 
         .left {
             color: #ffffff;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 400;
             display: flex;
             flex-direction: column;
             gap: 10px;
+
             .left-top {
                 width: 100%;
                 height: 100%;
@@ -432,28 +453,29 @@ onUnmounted(() => {
                     height: 50%;
                     width: 100%;
 
-                    span {
-                        margin-right: 20px;
-                    }
+
                 }
 
                 .control-group {
-                    display: flex;
-                    align-items: center;
+                    display: inline-flex;
+                    // align-items: center;
 
-                    span {
-                        margin-right: 20px;
-                    }
+
 
                     .btn-group {
                         display: flex;
+                        justify-content: center;
+                        align-items: center;
 
                         .btn {
                             border: none;
                             background: #fff;
                             color: #111;
-                            width: 30px;
-                            height: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 1.6vw;
+                            height: 2.4vh;
                             margin-left: 7px;
                             border-radius: 4px;
                             line-height: 30px;
@@ -473,9 +495,7 @@ onUnmounted(() => {
                     width: 100%;
                     height: 20%;
 
-                    span {
-                        margin-right: 20px;
-                    }
+
                 }
 
                 .auto-ven {
@@ -484,9 +504,7 @@ onUnmounted(() => {
                     width: 100%;
                     height: 20%;
 
-                    span {
-                        margin-right: 20px;
-                    }
+
                 }
             }
 
@@ -509,12 +527,13 @@ onUnmounted(() => {
             display: flex;
 
             .carousel-table {
-                width: 60%;
-                height: 100%;
-                margin: 0 auto;
-                background-color: #0e1a2b;
-                overflow: hidden;
-                position: relative;
+            width: 60%;
+            height: 100%;
+            margin: 0 auto;
+            background-color: #0e1a2b;
+            overflow: hidden;
+            position: relative;
+            border-radius: 1vw 0 0 1vw;
 
                 .carousel-table-header {
                     display: flex;
@@ -541,7 +560,7 @@ onUnmounted(() => {
                     flex-direction: column;
                     font-size: 0.7rem;
                     overflow-y: auto;
-                    max-height: 170px;
+                    max-height: 75%;
                     scroll-behavior: smooth;
                 }
 
@@ -556,7 +575,7 @@ onUnmounted(() => {
                 }
 
                 .row {
-                    min-height: 50px;
+                    min-height: 3.4vh;
                     display: flex;
                     background-color: #234567;
                     color: #fff;
@@ -576,8 +595,9 @@ onUnmounted(() => {
             .indoor-outdoor {
                 width: 40%;
                 height: 100%;
-                background-color: #ffffff;
+                // background-color: #ffffff;
                 display: flex;
+                border-radius: 0 1vw 1vw 0;
             }
         }
 
@@ -611,5 +631,15 @@ onUnmounted(() => {
             }
         }
     }
+}
+
+.spanTitle {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+span {
+    font-size: 1.2rem;
 }
 </style>

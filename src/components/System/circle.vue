@@ -3,22 +3,25 @@
 </template>
 
 <script setup lang="ts">
-import {  onMounted, ref, watch} from "vue";
+import { onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
-const props = withDefaults(defineProps<{
-  value: number
-  name: string
-  min: number
-  max: number
-  unit: string
-}>(), {
-  value: 10,
-  name: '温度',
-  min: -20,
-  max: 40,
-  unit: '°C'
-})
 
+const props = withDefaults(
+  defineProps<{
+    value: number;
+    name: string;
+    min: number;
+    max: number;
+    unit: string;
+  }>(),
+  {
+    value: 10,
+    name: "温度",
+    min: -20,
+    max: 40,
+    unit: "°C",
+  }
+);
 
 const chartRef = ref<HTMLDivElement | null>(null);
 let chartInstance: echarts.ECharts | null = null;
@@ -94,30 +97,37 @@ const getChartOptions = (data: {
         },
         detail: {
           valueAnimation: true,
-          formatter: `{value}${data.unit}`,
-          color: "#333",
-          fontSize: 14, // 中心文字大小
-          offsetCenter: [0, "0%"], // 中心位置
+          formatter: `{value|${data.value}${data.unit}}`,
+          rich: {
+            name: {
+              fontSize: 14,
+              color: "#fff",
+              align: "center",
+              padding: [0, 0, 5, 0], // 名称与值的间距
+            },
+            value: {
+              fontSize: 14,
+              color: "#fff",
+              align: "center",
+            },
+          },
+          offsetCenter: [0, "0%"], // 整体文字位置
         },
         data: [
           {
-            value: data.value,
             // name: data.name,
+            value: data.value,
           },
         ],
       },
     ],
   };
 };
-
-
-
-
 </script>
 
 <style lang="scss" scoped>
 .gauge-chartel {
-  width: 50px;
-  height: 50px;
+  width: 3.6rem;
+  height: 3.6rem;
 }
 </style>

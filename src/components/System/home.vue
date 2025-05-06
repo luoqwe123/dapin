@@ -13,7 +13,7 @@ const rooms = ref([
 </script>
 
 <template>
-  <div class="container">
+  <div class="Home-container">
     <!-- 上层房间 -->
     <div class="row top-row">
       <div v-for="room in rooms.slice(0, Math.floor(rooms.length)/2)" :key="room.id" class="room">
@@ -21,7 +21,10 @@ const rooms = ref([
           <div class="box-container">
             <!-- 盒子的底面 -->
             <div class="box-face bottom-face">
-              <slot name="content">{{ room.name }}</slot>
+              <div class="roomName">
+                <slot name="content">{{ room.name }}</slot>
+              </div>
+              
             </div>
 
             <!-- 四条支柱，表示四个顶点向上延伸的实线 -->
@@ -37,7 +40,7 @@ const rooms = ref([
     <!-- 下层房间 -->
     <div class="row bottom-row">
       <div v-for="room in rooms.slice(Math.floor(rooms.length)/2, rooms.length)" :key="room.id" class="room">
-        <div class="room-inner">
+       
           <div class="box-container">
             <!-- 盒子的底面 -->
             <div class="box-face bottom-face">
@@ -50,39 +53,46 @@ const rooms = ref([
             <div class="line line-3"></div>
             <div class="line line-4"></div>
           </div>
-        </div>
+        
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.container {
+<style  lang="scss" scoped>
+
+$room-width:12vw;
+$room-height:12vh;
+.Home-container {
   width: 100%;
 
   height: 100%;
 
-  background: #f5f5f5;
+  background: #090f27;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   /* 容器阴影增强整体立体感 */
   display: flex;
   flex-direction: column;
+  align-items: center;
+  // padding: 30% 0;
   gap: 30%;
   /* justify-content: space-between; */
 }
 
 .row {
+  height: 42%;
+  width: 80%;
   display: flex;
-  justify-content: space-between;
-  
-  gap: 15%;
+  /* justify-content: space-between; */
+  gap: 5%;
 }
 
 .room {
-  width: 200px;
+  // flex: 1;
+  width: $room-width; 
   /* 房间宽度 */
-  height: 100px;
+  height: $room-height;
   /* 房间高度 */
   position: relative;
 }
@@ -93,31 +103,31 @@ const rooms = ref([
 
 .box-container {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
   transform: rotateX(-30deg) rotateY(30deg);
   /* 调整观察角度 */
-  margin-top: 80px;
+  /* margin-top: 2vh; */
   padding-left: 20px;
 }
 
 /* 底面样式 */
 .box-face.bottom-face {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background: rgba(255, 99, 71, 0.8);
+  width: 100%;
+  height: 100%;
+  /* background: rgba(255, 99, 71, 0.8); */
   /* 底面颜色 */
-  border: 1px solid #ffffff;
+  border: 1px solid #fff;
   opacity: 0.9;
-  transform: rotateX(90deg) translateZ(50px);
+  transform: rotateX(90deg)  translateZ(0px);
   /* 底面位置 */
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
 }
@@ -125,30 +135,30 @@ const rooms = ref([
 /* 四条线（立体支柱） */
 .line {
   position: absolute;
-  width: 2px;
-  background: #000;
+  width: 0.1vw;
+  background:  linear-gradient(to top, rgba(255,255,255,.6), #090f27);
   /* 实线颜色 */
   transform-origin: bottom center;
 }
 
 .line-1 {
-  height: 6.9vh;
-  transform: translateX(-20px) translateY(-69px) translateZ(-37px) rotateY(0deg);
+  height: 6vh;
+  transform: translateX(0) translateY(0.1vh) translateZ(-calc($room-width/4)) rotateY(0deg);
 }
 
 .line-2 {
-  height: 6.9vh;
-  transform: translateX(170px) translateY(-22px) translateZ(-110px) rotateY(0deg);
+  height: 6vh;
+  transform: translateX(0) translateY(0.1vh) translateZ(calc($room-width/4)) rotateY(0deg);
 }
 
 .line-3 {
-  height: 6.9vh;
-  transform: translateX(-14px) translateY(-64px) translateZ(100px) rotateY(0deg);
+  height: 6vh;
+  transform: translateX($room-width) translateY(0.1vh) translateZ(-calc($room-width/4)) rotateY(0deg);
 }
 
 .line-4 {
-  height: 6.9vh;
-  transform: translateX(170px) translateY(-24px) translateZ(40px) rotateY(0deg);
+  height: 6vh;
+  transform: translateX($room-width) translateY(0.1vh) translateZ(calc($room-width/4)) rotateY(0deg);
 }
 
 /* 响应式设计 */

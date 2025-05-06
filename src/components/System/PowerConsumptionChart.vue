@@ -18,7 +18,7 @@ onMounted(() => {
         left: 'left',
         textStyle: {
           color: '#fff',
-          fontSize: '1.3rem',
+          fontSize: '1.2rem',
           fontWeight: 400
         }
       },
@@ -62,7 +62,7 @@ onMounted(() => {
       },
       series: [
         {
-          data: [40, 45, 50, 55, 60, 65, 70], // 调整为7个数据点，与xAxis.data匹配
+          data: [40, 45, 10, 55, 60, 70, 30], // 调整为7个数据点，与xAxis.data匹配
           type: 'line',
           lineStyle: {
             color: '#00bfff'
@@ -85,7 +85,7 @@ onMounted(() => {
 
 <style scoped>
 .power-consumption-chart {
-  width: 80%;
+  width: 100%;
   height: 100%;
   margin: 0 auto;
 }

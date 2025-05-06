@@ -13,11 +13,11 @@ const props = withDefaults(defineProps<{
 <template>
   <div class="square-box">
     <!-- 文字部分 -->
-    <div class="text-container">
+    <div class="text-container" >
       {{ props.word }}
     </div>
     <!-- 盒子主体，包含分段边框 -->
-    <div class="box-content">
+    <div class="box-content" style="gap: inherit;">
         
       <slot></slot>
     </div>
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
 .text-container {
   position: absolute;
   top: -16px; /* 与上边框平齐（抵消边框厚度） */
-  left: 30%; /* 距离左边框约25%（20%-30%范围内） */
+  left: 32%; /* 距离左边框约25%（20%-30%范围内） */
   transform: translateX(-50%); /* 水平居中于定位点 */
   padding: 0 10px; /* 文字左右留白 */
   background: #090f27; /* 背景色覆盖边框，模拟无边框效果 */
@@ -52,10 +52,9 @@ const props = withDefaults(defineProps<{
   height: 100%;
   border: 2px solid #333; /* 边框样式 */
   box-sizing: border-box;
-  display: flex;
+  border-radius: 2%;
   padding: 20px;
-  flex-direction: column;
-  justify-content: space-around;
+  
 }
 
 /* 伪元素覆盖文字区域边框 */
@@ -63,11 +62,12 @@ const props = withDefaults(defineProps<{
   content: '';
   position: absolute;
   top: -2px; /* 对齐上边框 */
-  left: 30%; /* 与文字对齐 */
+  left: 32%; /* 与文字对齐 */
   width: 100px; /* 覆盖文字区域，宽度根据文字长度调整 */
   height: 2px; /* 覆盖边框厚度 */
   background: #090f27; /* 使用背景色覆盖边框 */
   transform: translateX(-50%);
+  
   z-index: 1; /* 在边框之上，文字之下 */
 }
 
@@ -76,8 +76,8 @@ const props = withDefaults(defineProps<{
   content: '';
   position: absolute;
   top: -2px;
-  left: 0;
-  right: 0;
+  left: 2%;
+  right: 2%;
   height: 2px;
   background: linear-gradient(
     to right,
