@@ -8,13 +8,12 @@
     "build": "vue-tsc && vite build",
     "build:test": "vue-tsc && vite build --mode test",
     "build:pro": "vue-tsc && vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:server": "pnpm --filter server dev"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.6.8",
     "echarts": "^5.6.0",
-    "element-plus": "^2.7.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-echarts": "^7.0.3",
@@ -25,7 +24,6 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "fast-glob": "^3.3.2",
-    "mock.js": "^0.2.0",
     "postcss": "^8.4.38",
     "sass": "^1.75.0",
     "tailwindcss": "^3.4.3",
